@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newbury Kings - Football Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            overflow: hidden;
+            background: url('https://via.placeholder.com/1500x1000?text=Subtle+Pitch+Texture') repeat;
+        }
+
+        /* Changeable Variables */
+        :root {
+            --primary-color: #6A0DAD;
+            --secondary-color: #1A237E;
+            --accent-color: #E8F5E9;
+            --highlight-color: #FFD740;
+            --outrage-color: #D81B60;
+            --team-name: "Newbury Kings";
+            --social-twitter: "https://twitter.com/newburykingsfc";
+            --social-instagram: "https://www.instagram.com/newburykingsfc/";
+            --social-facebook: "https://facebook.com/newburykingsfc";
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            animation: fadeIn 1s ease-in;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--highlight-color);
+            transform: scale(1.1);
+        }
+
+        .social-links {
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 20px;
+            font-size: 1.8em;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.3);
+            color: var(--highlight-color);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            animation: slideUp 0.5s ease-out;
+            position: relative;
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid var(--accent-color);
+            border-top: 8px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Video Grid */
+        .video-grid {
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .video-grid:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .video-item {
+            margin-bottom: 20px;
+        }
+
+        .video-item iframe, .video-item video {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .video-item p {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+
+        #matchday-replay .video-grid { background: rgba(106, 13, 173, 0.1); }
+        #goal-rush .video-grid { background: rgba(255, 215, 64, 0.1); }
+        #locker-room-lowdown .video-grid { background: rgba(26, 35, 126, 0.1); }
+
+        /* Blog Posts and Info */
+        .blog-post, .info-block {
+            border-bottom: 1px dashed var(--secondary-color);
+            padding: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        .blog-post:hover, .info-block:hover {
+            background: var(--accent-color);
+        }
+
+        .blog-post:last-child, .info-block:last-child {
+            border-bottom: none;
+        }
+
+        .blog-post h3, .info-block h3 {
+            color: var(--secondary-color);
+            font-size: 1.5em;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        /* Toggles */
+        .toggle-content {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: var(--accent-color);
+            border-radius: 8px;
+        }
+
+        .toggle-btn {
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            color: var(--highlight-color);
+        }
+
+        /* Penalty Shootout Game */
+        #game-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1500x1000?text=Pitch+Background') no-repeat center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            animation: pitchFadeIn 1s ease forwards;
+        }
+
+        #game-container {
+            text-align: center;
+            color: white;
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        #goal {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 150px;
+            background: url('https://via.placeholder.com/300x150?text=Goal') no-repeat center/contain;
+            z-index: 1;
+            opacity: 0;
+            animation: goalSlideIn 1s ease 1s forwards;
+        }
+
+        #goalkeeper {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: url('https://via.placeholder.com/100x100?text=Keeper') no-repeat center/contain;
+            z-index: 2;
+            opacity: 0;
+            animation: keeperJumpIn 1s ease 2s forwards, keeperMove 2s infinite alternate 3s;
+        }
+
+        #player {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: url('https://via.placeholder.com/80x80?text=Player') no-repeat center/contain;
+            z-index: 3;
+            opacity: 0;
+            animation: playerRunIn 1s ease 3s forwards;
+        }
+
+        #ball {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 4;
+            opacity: 0;
+            animation: ballRollIn 0.5s ease 4s forwards;
+        }
+
+        #ball:hover {
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        #game-message {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 1.2em;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            color: var(--highlight-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes keeperMove {
+            0% { transform: translateX(-50%) translateX(-50px); }
+            100% { transform: translateX(-50%) translateX(50px); }
+        }
+
+        @keyframes shootBall {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-150px) rotate(360deg); }
+            100% { transform: translateX(-50%) translateY(-300px) scale(0.5); }
+        }
+
+        @keyframes pitchFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes goalSlideIn {
+            from { transform: translateX(-50%) translateY(-200px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        @keyframes keeperJumpIn {
+            0% { transform: translateX(-50%) translateY(200px); opacity: 0; }
+            50% { transform: translateX(-50%) translateY(-20px); opacity: 1; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        @keyframes playerRunIn {
+            from { transform: translateX(-50%) translateX(-300px); opacity: 0; }
+            to { transform: translateX(-50%) translateX(0); opacity: 1; }
+        }
+
+        @keyframes ballRollIn {
+            0% { transform: translateX(-50%) translateX(100px) rotate(0deg); opacity: 0; }
+            100% { transform: translateX(-50%) translateX(0) rotate(360deg); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul li { display: block; margin: 15px 0; }
+            .video-grid { grid-template-columns: 1fr; }
+            #game-container { width: 100%; height: 350px; }
+            #goal { width: 200px; height: 100px; top: 10px; }
+            #goalkeeper { width: 80px; height: 80px; top: 40px; }
+            #player { width: 60px; height: 60px; bottom: 50px; }
+            #ball { width: 30px; height: 30px; bottom: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Penalty Shootout Game -->
+    <div id="game-overlay">
+        <div id="game-container">
+            <h1>Penalty Shootout</h1>
+            <p>Score to Enter the Kings' Pitch!</p>
+            <div id="goal"></div>
+            <div id="goalkeeper"></div>
+            <div id="player"></div>
+            <div id="ball" onclick="shootPenalty()"></div>
+            <p id="game-message">Click the ball to shoot...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <h1><span id="team-name">var(--team-name)</span> - Football Blog</h1>
+        <nav>
+            <ul>
+                <li><a href="#team-tactics">Team Tactics</a></li>
+                <li><a href="#matchday-replay">Matchday Replay</a></li>
+                <li><a href="#goal-rush">Goal Rush</a></li>
+                <li><a href="#locker-room-lowdown">Locker Room Lowdown</a></li>
+                <li><a href="#offside-outrage">Offside Outrage</a></li>
+                <li><a href="#fan-stand">Fan Stand</a></li>
+            </ul>
+        </nav>
+        <div class="social-links">
+            <a href="https://twitter.com/newburykingsfc" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com/newburykingsfc/" target="_blank">Instagram</a>
+            <a href="https://facebook.com/newburykingsfc" target="_blank">Facebook</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <section id="team-tactics">
+            <h2>Team Tactics</h2>
+            <div class="loading"></div>
+            <div class="info-block">
+                <p><strong>Established:</strong> 2024</p>
+                <p><strong>County FA:</strong> Essex</p>
+                <p><strong>1st Choice Colours:</strong> Purple</p>
+                <p><strong>Alternative Colours:</strong> Navy</p>
+            </div>
+            <div class="info-block">
+                <h3>Contact Information</h3>
+                <p><em>Club contact information is only available to logged in users.</em></p>
+                <p><strong>Contact Name:</strong> Mo Adam</p>
+                <p><strong>Secretary:</strong> Qasim Ali</p>
+                <p><strong>Alternative Contact:</strong> Farhan Subhan</p>
+            </div>
+            <div class="info-block">
+                <h3>Players & Statistics</h3>
+                <p><em>No registered players listed.</em></p>
+            </div>
+            <div class="info-block">
+                <h3>Home Ground</h3>
+                <p>London Marathon Sports Ground<br>Forest Road<br>Hainault<br>Essex<br>IG6 3HJ</p>
+                <p><strong>Nearest Station:</strong> Fairlop (Central Line)</p>
+                <p><strong>Local Bus Routes:</strong> [To be added]</p>
+                <p><strong>Parking Availability:</strong> Parking available at ground</p>
+            </div>
+        </section>
+
+        <section id="matchday-replay">
+            <h2>Matchday Replay</h2>
+            <div class="loading"></div>
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <p>Match vs. Rival Team - March 2025</p>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <p>Match vs. City FC - Feb 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="goal-rush">
+            <h2>Goal Rush</h2>
+            <div class="loading"></div>
+            <div class="video-grid">
+                <div class="video-item">
+                    <!-- Placeholder for Jnr's 1st Goal - Replace with actual video URL -->
+                    <video controls src="https://i.imgur.com/8woKgWi_lq.mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Jnr's 1st Goal for the Club</p>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://i.imgur.com/8woKgWi_lq.mp4" allowfullscreen></iframe>
+                    <p>Best Saves - Feb 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="locker-room-lowdown">
+            <h2>Locker Room Lowdown</h2>
+            <div class="loading"></div>
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <p>Training Session - March 2025</p>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    <p>Locker Room Fun - Feb 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="offside-outrage">
+            <h2>Offside Outrage</h2>
+            <div class="loading"></div>
+            <div class="blog-post">
+                <h3>Dedication or Intimidation</h3>
+                <p class="toggle-btn" onclick="toggleContent('outrage3')">Watch Video</p>
+                <div id="outrage3" class="toggle-content">
+                    <!-- Placeholder for Dedication or Intimidation - Replace with actual video URL -->
+                    <video controls src="https://i.imgur.com/hf9kPZq.mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>Was it passion or provocation? You decide!</p>
+                </div>
+            </div>
+            <div class="blog-post">
+                <h3>The Phantom Offside & the Ultimate Nutcracker!</h3>
+                <p class="toggle-btn" onclick="toggleContent('outrage4')">Watch Video</p>
+                <div id="outrage4" class="toggle-content">
+                    <!-- Placeholder for Phantom Offside - Replace with actual video URL -->
+                    <video controls src="https://i.imgur.com/9n95Gqc.mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p>A call so bad it hurts—literally!</p>
+                </div>
+            </div>
+            <div class="blog-post">
+                <h3>Ref’s Blind Call!</h3>
+                <p class="toggle-btn" onclick="toggleContent('outrage1')">Extra Time</p>
+                <div id="outrage1" class="toggle-content">
+                    <p>That offside flag last week was a joke—clearly onside! Refs need VAR in Essex!</p>
+                </div>
+            </div>
+            <div class="blog-post">
+                <h3>Striker’s Epic Miss</h3>
+                <p class="toggle-btn" onclick="toggleContent('outrage2')">Extra Time</p>
+                <div id="outrage2" class="toggle-content">
+                    <p>How do you miss an open net from 2 yards? Banter material for days!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fan-stand">
+            <h2>Fan Stand</h2>
+            <div class="loading"></div>
+            <div class="blog-post">
+                <h3>Welcome to Newbury Kings!</h3>
+                <p class="toggle-btn" onclick="toggleContent('post1')">Extra Time</p>
+                <div id="post1" class="toggle-content">
+                    <p>Established in 2024, we're excited to kick off in Essex. Stay tuned!</p>
+                </div>
+            </div>
+            <div class="blog-post">
+                <h3>First Training Session Recap</h3>
+                <p class="toggle-btn" onclick="toggleContent('post2')">Extra Time</p>
+                <div id="post2" class="toggle-content">
+                    <p>The team hit the ground running at London Marathon Sports Ground.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Penalty Shootout Game
+        function shootPenalty() {
+            const ball = document.getElementById("ball");
+            const message = document.getElementById("game-message");
+            const goalkeeper = document.getElementById("goalkeeper");
+            
+            const saveChance = Math.random() < 0.3;
+            
+            if (!saveChance) {
+                ball.style.animation = "shootBall 1s ease forwards";
+                setTimeout(() => {
+                    message.textContent = "Goal! Welcome to the Kings!";
+                    setTimeout(() => {
+                        document.getElementById("game-overlay").style.display = "none";
+                        document.querySelector(".container").style.display = "block";
+                        document.body.style.overflow = "auto";
+                        loadSections();
+                    }, 1000);
+                }, 1000);
+            } else {
+                ball.style.transform = "translateX(-50%) translateY(-100px)";
+                goalkeeper.style.transform = "translateX(-50%) scale(1.2)";
+                message.textContent = "Saved! Try Again!";
+                setTimeout(() => {
+                    ball.style.transform = "translateX(-50%)";
+                    goalkeeper.style.transform = "translateX(-50%)";
+                    message.textContent = "Click the ball to shoot...";
+                    ball.style.animation = "none";
+                    setTimeout(() => ball.style.animation = "ballRollIn 0.5s ease forwards", 100);
+                }, 1000);
+            }
+        }
+
+        // Replace CSS variables in HTML
+        document.getElementById("team-name").textContent = getComputedStyle(document.documentElement).getPropertyValue("--team-name").trim();
+
+        // Toggle Content
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+
+        // Simulated Section Loading
+        function loadSections() {
+            const sections = document.querySelectorAll("section");
+            sections.forEach((section, index) => {
+                const loading = section.querySelector(".loading");
+                setTimeout(() => {
+                    loading.style.display = "none";
+                    section.querySelectorAll(".info-block, .video-grid, .blog-post").forEach(el => el.style.display = "block");
+                }, (index + 1) * 500);
+            });
+        }
+
+        // Hide content initially
+        document.querySelectorAll(".info-block, .video-grid, .blog-post").forEach(el => el.style.display = "none");
+
+        // Ensure game overlay is visible on load
+        window.onload = () => {
+            document.getElementById("game-overlay").style.display = "flex";
+        };
+    </script>
+</body>
+</html>
